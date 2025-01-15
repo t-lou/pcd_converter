@@ -144,7 +144,6 @@ class PcdLoader:
         with open(filename, "rb") as fi:
             content = fi.read()
 
-        # print(content)
         lines = content.split(b"\n")
 
         is_header = True
@@ -165,8 +164,6 @@ class PcdLoader:
         assert all(t in ("I", "U", "F") for t in self.headers["TYPE"])
         assert all(c == "1" for c in self.headers["COUNT"])
 
-        # print(self.headers)
-        # print(self.headers["DATA"])
         if self.headers["DATA"][0] == "ascii":
             self._parse_ascii(content)
         elif self.headers["DATA"][0] == "binary":

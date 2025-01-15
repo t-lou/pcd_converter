@@ -1,6 +1,7 @@
 import open3d as o3d
 import numpy as np
-import shutil
+import pytest
+
 
 from pcd_loader import PcdLoader
 
@@ -66,6 +67,14 @@ DATA ascii
     assert content.strip() == answer.strip()
 
 
+@pytest.mark.parametrize(
+    "type_name",
+    [
+        ("ascii"),
+        ("binary"),
+        ("binary_compressed"),
+    ],
+)
 def test_type(type_name: str):
     filename = create_test_pointcloud(type_name=type_name)
 
@@ -73,8 +82,3 @@ def test_type(type_name: str):
 
     loader.save_ascii("test_ascii.pcd")
     check_ascii_file("test_ascii.pcd")
-
-
-test_type(type_name="ascii")
-test_type(type_name="binary")
-test_type(type_name="binary_compressed")
