@@ -1,5 +1,5 @@
 class PcdLoader:
-    def __init__(self, filename: str):
+    def __init__(self, filename: str) -> None:
         """Constructor to initialize the loader with one pcd file.
 
         Args:
@@ -24,7 +24,7 @@ class PcdLoader:
             for key, val in self.headers.items()
         )
 
-    def _parse_ascii(self, content):
+    def _parse_ascii(self, content: bytearray) -> None:
         """Parse content in ascii format.
 
         Args:
@@ -44,7 +44,7 @@ class PcdLoader:
                 self.data[f].append(v)
 
     @staticmethod
-    def _conv_format(t, s) -> str:
+    def _conv_format(t: str, s: str) -> str:
         """Get the format in python struct for the give type and size.
 
         Args:
@@ -69,7 +69,7 @@ class PcdLoader:
 
         assert 1 == 0, f"unsupported type {t} and size {s}"
 
-    def _parse_binary(self, content):
+    def _parse_binary(self, content: bytearray) -> None:
         """Parse content in binary format.
 
         Args:
@@ -77,7 +77,6 @@ class PcdLoader:
         """
         import struct
 
-        sizes = [int(s) for s in self.headers["SIZE"]]
         self.data = {f: [] for f in self.headers["FIELDS"]}
 
         line_format = "".join(
@@ -95,7 +94,7 @@ class PcdLoader:
                 ip += 1
 
     @staticmethod
-    def _lzf_decompress(input_bytes, output_size):
+    def _lzf_decompress(input_bytes: bytearray, output_size: int) -> bytearray:
         """Decompress one lzf bytestring.
 
         Args:
@@ -135,7 +134,7 @@ class PcdLoader:
 
         return bytes(output_bytes)
 
-    def _parse_binary_compressed(self, content):
+    def _parse_binary_compressed(self, content: bytearray) -> None:
         """Parse content in binary_compressed format.
 
         Args:
@@ -167,7 +166,7 @@ class PcdLoader:
             for i, f in enumerate(self.headers["FIELDS"])
         }
 
-    def save_ascii(self, filename) -> None:
+    def save_ascii(self, filename: str) -> None:
         """Save the object in ascii format.
 
         Args:
@@ -176,17 +175,17 @@ class PcdLoader:
 
         assert len(set(len(val) for val in self.data.values())) <= 1
 
-        l = len(list(self.data.values())[0]) if bool(self.data) else 0
+        num_points = len(list(self.data.values())[0]) if bool(self.data) else 0
         with open(filename, "w", encoding="utf-8") as fo:
             fo.write(self._build_ascii_header() + "\n")
 
-            for i in range(l):
+            for i in range(num_points):
                 fo.write(
                     " ".join(str(self.data[f][i]) for f in self.headers["FIELDS"])
                     + "\n"
                 )
 
-    def load(self, filename: str):
+    def load(self, filename: str) -> None:
         """Load one pcd file.
 
         Args:
