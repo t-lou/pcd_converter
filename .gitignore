@@ -1,0 +1,5 @@
+# Automatically created by ruff.
+.pytest_cache
+.ruff_cache
+__pycache__
+*.pcd
