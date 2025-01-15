@@ -66,11 +66,6 @@ DATA ascii
     assert content.strip() == answer.strip()
 
 
-
-# create_test_pointcloud(type_name="ascii")
-# create_test_pointcloud(type_name="binary")
-# create_test_pointcloud(type_name="binary_compressed")
-
 def test_type(type_name: str):
     filename = create_test_pointcloud(type_name=type_name)
 
@@ -82,3 +77,4 @@ def test_type(type_name: str):
 
 test_type(type_name="ascii")
 test_type(type_name="binary")
+test_type(type_name="binary_compressed")
