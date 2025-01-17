@@ -1,14 +1,20 @@
 #!/usr/bin/env python3
-import sys
 
+import sys
+import argparse
 
 from pcd_loader import PcdLoader
 
-if len(sys.argv) <= 1 or sys.argv[1] in ("--help", "-h"):
-    print("python conv_pcd.py input.pcd output.pcd")
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(
+        prog="conv_pcd", description="convert pcd to ascii format"
+    )
+    parser.add_argument("path_in")
+    parser.add_argument("path_out")
+
+    args = parser.parse_args()
+    PcdLoader(args.path_in).save_ascii(args.path_out)
+
+else:
+    print("oops, not a dep")
     sys.exit(1)
-
-path_in = sys.argv[1]
-path_out = sys.argv[2]
-
-PcdLoader(path_in).save_ascii(path_out)
