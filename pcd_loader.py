@@ -184,11 +184,11 @@ class PcdLoader:
         with open(filename, "w", encoding="utf-8") as fo:
             fo.write(self._build_ascii_header() + "\n")
 
-            for i in range(num_points):
-                fo.write(
-                    " ".join(str(self.data[f][i]) for f in self.headers["FIELDS"])
-                    + "\n"
-                )
+            lines = [
+                " ".join(str(self.data[f][i]) for f in self.headers["FIELDS"])
+                for i in range(num_points)
+            ]
+            fo.write("\n".join(lines) + "\n")
 
     def load(self, filename: str) -> None:
         """Load one pcd file.
