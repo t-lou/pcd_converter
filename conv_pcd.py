@@ -13,7 +13,9 @@ if __name__ == "__main__":
     parser.add_argument("path_out")
 
     args = parser.parse_args()
-    PcdLoader(args.path_in).save_ascii(args.path_out)
+    data = PcdLoader(args.path_in)
+    print(data)
+    data.save_ascii(args.path_out)
 
 else:
     print("oops, not a dep")

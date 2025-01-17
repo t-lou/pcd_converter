@@ -13,6 +13,17 @@ class PcdLoader:
         assert filename.endswith(".pcd")
         self.load(filename=filename)
 
+    def __str__(self):
+        """Print this point cloud."""
+        if not bool(self.data):
+            return "Empty object, load one pcd first"
+
+        result = f"One point cloud with fields {list(self.data.keys())}\n"
+        for k, v in self.data.items():
+            result += f"field: {k}\n{v}\n"
+
+        return result
+
     def _reset(self):
         """Reset the class members."""
         self.headers = {}
