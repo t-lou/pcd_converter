@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 import open3d as o3d
 import numpy as np
 import pytest
@@ -5,6 +6,7 @@ import pytest
 
 from pcd_loader import PcdLoader
 
+# the testing data
 TEST_DATA = {
     "simple": {
         "data": np.array(
@@ -47,10 +49,10 @@ FIELDS x y z
 SIZE 4 4 4
 TYPE F F F
 COUNT 1 1 1
-WIDTH 4
+WIDTH 1000
 HEIGHT 1
 VIEWPOINT 0 0 0 1 0 0 0
-POINTS 4
+POINTS 1000
 DATA ascii
 """
         + """0 0 1
@@ -82,7 +84,7 @@ def create_test_pointcloud(type_name: str, data_name: str) -> str:
         },
     }
 
-    filename = f"./{type_name}.pcd"
+    filename = f"./{type_name}_{data_name}.pcd"
     pc = o3d.geometry.PointCloud()
     pc.points = o3d.utility.Vector3dVector(TEST_DATA[data_name]["data"])
 
@@ -150,8 +152,12 @@ def test_type(type_name: str, data_name: str):
     # read
     loader = PcdLoader(filename)
 
-    loader.save_ascii(filename="test_ascii.pcd")
-    # check_ascii_file(filename="test_ascii.pcd", data_name=data_name)
+    loader.save_ascii(filename=f"test_ascii_{type_name}_{data_name}.pcd")
+    check_ascii_file(
+        filename=f"test_ascii_{type_name}_{data_name}.pcd", data_name=data_name
+    )
 
     check_values(filename=filename, data_name=data_name)
-    check_values(filename="test_ascii.pcd", data_name=data_name)
+    check_values(
+        filename=f"test_ascii_{type_name}_{data_name}.pcd", data_name=data_name
+    )

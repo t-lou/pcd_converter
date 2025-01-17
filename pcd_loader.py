@@ -1,4 +1,9 @@
+#!/usr/bin/env python3
+
+
 class PcdLoader:
+    """Loader of a PCD file, with writing function to ascii format."""
+
     def __init__(self, filename: str) -> None:
         """Constructor to initialize the loader with one pcd file.
 
