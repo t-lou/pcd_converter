@@ -2,6 +2,9 @@
 
 import struct
 
+# big or little endianness
+BINARY_BYTEORDER = "little"
+
 
 class PcdLoader:
     """Loader of a PCD file, with writing function to ascii format."""
@@ -160,8 +163,8 @@ class PcdLoader:
         Args:
             content: part of input file in bytestring format
         """
-        size1 = int.from_bytes(content[:4], byteorder="little")
-        size2 = int.from_bytes(content[4:8], byteorder="little")
+        size1 = int.from_bytes(content[:4], byteorder=BINARY_BYTEORDER)
+        size2 = int.from_bytes(content[4:8], byteorder=BINARY_BYTEORDER)
         size_unc, size_com = (
             max(size1, size2),
             min(size1, size2),
