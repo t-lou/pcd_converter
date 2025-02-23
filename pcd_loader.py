@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 
+import struct
+
 
 class PcdLoader:
     """Loader of a PCD file, with writing function to ascii format."""
@@ -91,8 +93,6 @@ class PcdLoader:
         Args:
             content: part of input file in bytestring format
         """
-        import struct
-
         self.data = {f: [] for f in self.headers["FIELDS"]}
 
         line_format = "".join(
@@ -160,8 +160,6 @@ class PcdLoader:
         Args:
             content: part of input file in bytestring format
         """
-        import struct
-
         size1 = int.from_bytes(content[:4], byteorder="little")
         size2 = int.from_bytes(content[4:8], byteorder="little")
         size_unc, size_com = (
